@@ -1,10 +1,16 @@
 Rort::Application.routes.draw do
+  resources :users
+  
+  match '/signup', :to => 'users#new'
 
-  get 'pages/about'
-  get 'pages/contact'
-  get 'pages/home'
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
+  match '/contact', :to => 'pages#contact'
+  match '/about', :to   => 'pages#about'
+  match '/help', :to    => 'pages#help'
+
+  root :to => 'pages#home'
+  
+
+# first created -> highest priority.
 
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'

@@ -1,9 +1,9 @@
-<h1>MadnesS</h1>
+<h1><%= t('.simple_title', :default => 'MadnesS') %></h1>
 
 <p>
-  This is home page for the 
+  This is the page for the
   <a href="http://madness.org.ua/">MadnesS</a>
   portal page.
 </p>
 
-<%= link_to 'Sign up now!', '#', :class => "signup_button round" %>
+<%= link_to 'Sign up now!', signup_path, :class => "signup_button round" %>
