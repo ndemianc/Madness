@@ -25,13 +25,19 @@ class User < ActiveRecord::Base
       return nil if user.nil?
       return user if user.has_password?(submitted_password)
     end
+
+    def authenticate_with_salt(id, cookie_salt)
+      user = User.find_by_id(id)
+      (user && user.salt == cookie_salt) ? user : nil
+    end
+
   end
 
   private
 
     def encrypt_password
-      self.salt = make_salt if self.new_record?
-      self.encrypted_password = encrypt("#{self.salt}--#{self.password}")
+      self.salt = make_salt if new_record?
+      self.encrypted_password = encrypt(password)
     end
 
     def make_salt
@@ -39,7 +45,7 @@ class User < ActiveRecord::Base
     end
 
     def encrypt(string)
-      secure_hash("#{self.salt}--#{string}")
+      secure_hash("#{salt}--#{string}")
     end
 
     def secure_hash(string)
