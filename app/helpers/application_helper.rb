@@ -17,6 +17,7 @@ module ApplicationHelper
   def current_user=(user)
     @current_user = user
   end
+
   def current_user
     @current_user ||= user_from_remember_token
   end
@@ -25,7 +26,7 @@ module ApplicationHelper
     !current_user.nil?
   end
 
-  def correct_user?(user)
+  def current_user?(user)
     user == current_user
   end
 

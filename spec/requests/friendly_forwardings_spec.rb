@@ -21,7 +21,6 @@ describe "FriendlyForwardings" do
   describe "for signed-in users" do
     before(:each) do
       wrong_user = Factory(:user, :email => "user@example.net")
-      debugger
       test_sign_in(wrong_user)
     end
 
