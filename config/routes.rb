@@ -12,7 +12,8 @@ Rort::Application.routes.draw do
   match '/help', :to    => 'pages#help'
 
   root :to => 'pages#home'
-  
+
+  resources :microposts, :only => [:create, :destroy]
 
 # first created -> highest priority.
 
