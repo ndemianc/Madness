@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  include ApplicationHelper 
-  before_filter :authenticate, :only => [:index, :edit, :update]
+  include ApplicationHelper
+
+  before_filter :authenticate, :except => [:show, :new, :create]
   before_filter :correct_user, :only => [:edit, :update]
   before_filter :admin_user,   :only => :destroy
 
@@ -32,10 +33,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def delete
-
-  end
-
   def edit
     @user = User.find(params[:id])
     @title = "Edit user"
@@ -56,6 +53,20 @@ class UsersController < ApplicationController
   def destroy
     user = User.find(params[:id]).destroy
     redirect_to users_path, :flash => { :success => "User #{user.name} destroyed."}
+  end
+
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.following.paginate(:page => params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(:page => params[:page])
+    render 'show_follow'
   end
 
   private

@@ -3,7 +3,7 @@ module ApplicationHelper
   def logo
     image_tag("madness_logo.png", :alt => "MadnesS", :class => "round")
   end
-  
+
   def sign_in(user)
     cookies.permanent.signed[:remember_token] = [user.id, user.salt]
     self.current_user = user
@@ -61,4 +61,5 @@ module ApplicationHelper
       store_location
       redirect_to signin_path, :notice => "Please sign in to access this page!"
     end
+
 end

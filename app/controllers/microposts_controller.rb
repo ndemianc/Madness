@@ -1,10 +1,15 @@
 class MicropostsController < ApplicationController
+  include MicropostsHelper
+  include ActionView::Helpers::OutputSafetyHelper
+  include ActionView::Helpers::SanitizeHelper
+  extend ActionView::Helpers::SanitizeHelper::ClassMethods
 
   before_filter :authenticate,    :only => [:create, :destroy]
   before_filter :authorized_user, :only => [:destroy]
 
   def create
     @micropost = current_user.microposts.build(params[:micropost])
+    @micropost[:content] = sanitize(raw(wrap(@micropost[:content])))
     if @micropost.save
       flash[:success] = "Micropost created!"
       redirect_to root_path
